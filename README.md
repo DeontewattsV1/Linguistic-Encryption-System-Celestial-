@@ -1,73 +1,75 @@
-<div align="center">
-  <img src="branding/phaseform/02-guardians-hero.png" alt="Phaseform Security Solutions — Guardians of the Realm" width="720"/>
+<p align="center">
+  <img src="branding/les_banner.png" alt="Linguistic Encryption System -- Celestial" width="100%" />
+</p>
 
-  <h1>Linguistic Encryption System · Celestial</h1>
-  <p><strong>Evidence-bounded sovereign AI runtime.</strong> Defensive-only. Provenance-first.</p>
-  <p><em>Phaseform Security Solutions — Safeguard your Domain · Secure your Dynasty</em></p>
-</div>
+<p align="center">
+  <a href="https://github.com/DeontewattsV1/Linguistic-Encryption-System-Celestial-/actions/workflows/ci.yml">
+    <img src="https://github.com/DeontewattsV1/Linguistic-Encryption-System-Celestial-/actions/workflows/ci.yml/badge.svg" alt="Celestial CI" />
+  </a>
+  <img src="https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-4D9FFF?labelColor=0D1117&logo=python" alt="Python" />
+  <img src="https://img.shields.io/badge/posture-defensive--only-8B5CF6?labelColor=0D1117" alt="Defensive Only" />
+  <img src="https://img.shields.io/badge/license-MIT-C9A84C?labelColor=0D1117" alt="MIT" />
+</p>
+
+<h1 align="center">Linguistic Encryption System · Celestial</h1>
+<p align="center"><strong>Evidence-bounded sovereign AI runtime. Defensive-only. Provenance-first.</strong></p>
+<p align="center"><em>Phaseform Security Solutions -- Safeguard your Domain. Secure your Dynasty.</em></p>
+
+<p align="center">
+  <img src="branding/les_badge.png" alt="Celestial Badge" width="25%" />
+</p>
 
 ---
 
-## What this repository is
+## What this is
 
-This repository contains the **Celestial runtime package** — a policy-driven, signature-verified execution shell for evidence-bounded AI agents operating under the **Architect's Manifesto** constraints (ECTI, CSM, STL, KAQ). The centerpiece is the **Aletheia Lattice Operational System Prompt v1.0**, a production specification for reasoning that separates archive evidence from live telemetry from forecast scenarios, attaches provenance and confidence to every substantive claim, and refuses to silently promote content between temporal channels.
+The **Celestial runtime** is a policy-driven, signature-verified execution shell for evidence-bounded AI agents operating under the **Architect's Manifesto** constraints (ECTI, CSM, STL, KAQ).
 
-The runtime ships as a set of cooperating Python modules: a policy packager that encrypts and signs governance templates, a watcher that activates only packs whose Ed25519 signatures verify against a trusted public key, a rotator that performs atomic swaps with rollback, a release-manifest signer for cross-team handoffs, a contradiction-check scaffold, and the `celestial_agent` cryptographic core. Every mutation lands in an append-only audit log.
+The centerpiece is the **Aletheia Lattice Operational System Prompt v1.0**, a production specification for reasoning that:
+- Separates archive evidence from live telemetry from forecast scenarios
+- Attaches provenance and confidence to every substantive claim
+- Refuses to silently promote content between temporal channels
 
-## The defensive-only posture, stated once and for real
+### Modules
 
-This codebase implements **defensive security primitives only**. It deliberately does not include an autonomous deception engine, offensive toolchain, or any component designed to attack a system rather than defend one. The closest thing in the repo, `deception_review_stub.py`, is exactly what the name says — a review stub with supervised, local-only scaffolding so the governance question can be studied under human oversight before any capability is ever built. This constraint is encoded directly in the Aletheia Lattice prompt (`prompts/aletheia_lattice_operational_system_prompt_v1.md`) and in every policy template that references it: `capabilities.can_generate_code = false`, `governance.defensive_only = true`. Pull requests that attempt to change either flag will not be accepted.
+| Module | Purpose |
+|:---|:---|
+| `celestial_agent/` | Cryptographic core -- Ed25519 signing, policy encryption |
+| `orchestrator.py` | Top-level runtime loop |
+| `policy_rotator.py` | Atomic pack swaps with rollback |
+| `vault_watcher.py` | Activates only signature-verified packs |
+| `manifest_verifier.py` | Cross-team handoff signature verification |
+| `release_manifest.py` | Release manifest signer |
+| `profile_manager.py` | Runtime profile configuration |
+| `rotation_guard.py` | Guards atomic rotation state |
 
-## The Aletheia Lattice prompt, in one paragraph
+### Defensive-Only Posture
 
-When an agent is instantiated under the Aletheia Lattice prompt, it operates with three evidence channels that never bleed into each other. The **Archive Channel** carries immutable historical evidence with explicit time labels. The **Live Channel** carries current operational data with freshness markers. The **Forecast Channel** carries projections and simulations that are always explicitly announced as "scenario projection, not observed fact." Before any substantive claim is promoted to the user, it runs through five parallel checks — causal, constraint, probabilistic, synthesis, and contradiction — and the five-state immune layer (VOID → TRACE → CAUTION → GRAVE → CONDEMNED) governs what the agent will and will not do at each risk level. Read the full specification at [`prompts/aletheia_lattice_operational_system_prompt_v1.md`](prompts/aletheia_lattice_operational_system_prompt_v1.md).
+This codebase implements **defensive security primitives only**. The `deception_review_stub.py` is a supervised, local-only review scaffold -- not an autonomous deception engine.
+
+---
 
 ## Quickstart
 
 ```bash
-python -m venv .venv && source .venv/bin/activate
+git clone https://github.com/DeontewattsV1/Linguistic-Encryption-System-Celestial-
+cd Linguistic-Encryption-System-Celestial-
 pip install -r requirements.txt
 
-# Package the Aletheia Lattice operational prompt as a signed policy pack
-python template_packager.py \
-  --template aletheia_lattice_operational_prompt_v1 \
-  --name aletheia_lattice_operational_prompt_v1_pack \
-  --passphrase 'your-strong-passphrase'
+# Run smoke tests
+python _smoke_test.py
 
-# Create a signed release manifest for cross-team handoff
-python release_manifest.py \
-  --template aletheia_lattice_operational_prompt_v1 \
-  --pack-name aletheia_lattice_operational_prompt_v1_pack \
-  --release-name aletheia_lattice_operational_prompt_v1_release \
-  --release-notes "Operational prompt v1.0 — evidence-bounded, defensive-only."
-
-# Export an end-to-end handoff bundle (template + encrypted pack + signatures)
-python handoff_bundle.py \
-  --pack-name aletheia_lattice_operational_prompt_v1_pack \
-  --release-name aletheia_lattice_operational_prompt_v1_release \
-  --include-template
+# Start vault watcher
+python vault_watcher.py
 ```
-
-Smoke-test the full path end-to-end with `python _smoke_operational_prompt_v1.py`. The test asserts that the prompt artifacts exist, the pack encrypts, the manifest signs and verifies against the embedded public key, and the bundle zip contains exactly the expected payload set.
-
-## Repository map
-
-The `prompts/` directory holds the Aletheia Lattice specification in both narrative (`.md`) and structured (`.json`) form. The `policy_templates/` directory holds policy templates that reference those prompts and declare governance constraints — `aletheia_lattice_operational_prompt_v1.json` is the canonical one. The `celestial_agent/` package holds the cryptographic core (`agent_spec_crypto.py`) that underwrites every signature in the system. The `docs/` directory contains architecture notes including the threat-control matrix and the deception simulation guardrails. Everything at the top level is a runtime module: the packager, the watcher, the rotator, the manifest signer, the risk profiler, the audit viewer, and the smoke tests that keep it honest.
-
-The `branding/phaseform/` directory carries the Phaseform Security Solutions visual system — both the **Guardians of the Realm** gold-and-dragon treatment for external/consumer-facing material and the tech-blue treatment for enterprise-facing material. Usage guidelines live in [`branding/BRANDING.md`](branding/BRANDING.md).
-
-## Governance
-
-Every substantive action in this runtime is gated by a signed policy pack. Private keys live outside the repository — the `keys/` directory is a `.gitignore`d placeholder so the runtime can find its key path after clone, but the actual key material is never committed. Do not commit a `creator_private_key.b64` or any file ending in `.enc` or `.sig` produced locally; the `.gitignore` will catch them, but the rule is cultural before it is mechanical. Consequential actions such as policy changes and sensitive tool activation require human approval per the policy template's `governance.human_approval_required_for` list.
-
-## License
-
-MIT — see [`LICENSE`](LICENSE).
 
 ---
 
-<div align="center">
-  <img src="branding/phaseform/05-hex-mark-gold.png" alt="Phaseform mark" width="120"/>
-  <br/>
-  <sub>Part of the <strong>GoodShyt Group</strong> sovereign-AI stack — aligned with NIST AI RMF 1.0, NIST GenAI Profile, CISA Secure-by-Design, and FIPS 203 / 204 / 205.</sub>
-</div>
+## Related Projects
+
+- [Ethos-Aegis-](https://github.com/DeontewattsV1/Ethos-Aegis-) -- Sovereign AI Immune Architecture
+- [self-improving-agent](https://github.com/DeontewattsV1/self-improving-agent) -- Continuous learning agent
+
+---
+
+MIT (c) [GoodShyt Group](https://github.com/DeontewattsV1)
