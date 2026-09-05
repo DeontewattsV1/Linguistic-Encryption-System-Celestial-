@@ -62,17 +62,59 @@ ENV/
 .env
 .env.*
 !.env.example
+!.env.sample
+
+# --- Generic credentials / tokens -----------------------------------------
+*.secret
+*.secrets
+*.token
+*.tokens
+*.pfx
+*.jks
+*.keystore
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+credentials.json
+credentials.*.json
+service-account*.json
+service_account*.json
+secrets.json
+secrets.*.json
+.npmrc
+.pypirc
+.netrc
+.dev.vars
+.dev.vars.*
+.vault-token
+
+# --- Cloud / infrastructure local state -----------------------------------
+.wrangler/
+.vercel/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+.aws/
+.ssh/
+.gnupg/
 
 # --- OS / editor noise ----------------------------------------------------
 .DS_Store
 Thumbs.db
 *.swp
 *.swo
+*.bak
 .idea/
 .vscode/
 *.iml
+__MACOSX/
 
 # --- Local scratch --------------------------------------------------------
 scratch/
 tmp/
 *.tmp
+node_modules/
+coverage/
